@@ -32,7 +32,7 @@ const Signup = () => {
         setPassword("");    
           alert("Thanks for Signing up");
         } else {
-            alert("Some error occured");
+            alert("User/Email already exists");
         }
       } catch (err) {
         console.log(err);
@@ -79,7 +79,7 @@ const Signup = () => {
                                 <span className="label-text">Password</span>
                             </label>
                             <input
-                            type="text"
+                            type="password"
                             name="password"
                             onChange={(e) => { setPassword(e.target.value);}}
                             value={password}

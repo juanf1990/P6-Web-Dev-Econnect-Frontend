@@ -22,13 +22,15 @@ const Login = () => {
           }),
         });
         let resJson = await res.json();
-        console.log(resJson);
+        console.log('Hola!'+res);
         if (res.status === 201) {
         setEmail("");
         setPassword("");    
-          alert("Welcome back!");
+          localStorage.setItem("token", resJson.token);
+            // Redirect to feed page
+            // window.location.href = "/feed";
         } else {
-            alert("Some error occured");
+            alert("Check your email and password");
         }
       } catch (err) {
         console.log(err);
@@ -65,7 +67,7 @@ const Login = () => {
                                 <span className="label-text">Password</span>
                             </label>
                             <input
-                            type="text"
+                            type="password"
                             name="password"
                             onChange={(e) => { setPassword(e.target.value);}}
                             value={password}
