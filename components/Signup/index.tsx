@@ -2,11 +2,11 @@
 import React from 'react'
 import Image from 'next/image'
 import { useState } from 'react'
-const url = "http://localhost:8081/api/users/signup";
+const url = "http://localhost:8000/api/users/signup";
 
 
 const Signup = () => {
-    const [userName, setUserName] = useState("");
+    const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -19,7 +19,7 @@ const Signup = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userName: userName,
+            username: username,
             email: email,
             password: password,
           }),
@@ -58,7 +58,7 @@ const Signup = () => {
                             type="text"
                             name="username"
                             onChange={(e) => { setUserName(e.target.value);}}
-                            value= {userName}
+                            value= {username}
                             placeholder="Name"
                             className="input input-bordered" />
                         </div>

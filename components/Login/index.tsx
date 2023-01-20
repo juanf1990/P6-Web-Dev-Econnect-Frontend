@@ -2,7 +2,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useState } from 'react'
-const url = "http://localhost:8081/api/users/login";
+const url = "http://localhost:8000/api/users/login";
 
 const Login = () => {
     const [email, setEmail] = useState("");
