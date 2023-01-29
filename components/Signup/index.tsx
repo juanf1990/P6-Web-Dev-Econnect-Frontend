@@ -2,12 +2,14 @@
 import React from "react";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/router";
 const url = "http://localhost:8001/api/users/signup";
 
 const Signup = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   let handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -31,7 +33,7 @@ const Signup = () => {
         setPassword("");
         alert("Thanks for Signing up");
         // Redirect to login page
-        window.location.href = "/";
+        router.push("/");
       } else {
         alert("User/Email already exists");
       }

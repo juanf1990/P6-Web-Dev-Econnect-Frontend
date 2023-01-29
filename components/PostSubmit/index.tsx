@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import { useRouter } from "next/router";
 
 const index = () => {
   const [user, setUser] = useState("");
   const [userId, setUserId] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-
   const cookie = Cookies.get("token");
+  const router = useRouter();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     if (cookie) {
@@ -17,7 +19,7 @@ const index = () => {
       setUser(decoded.username);
       setUserId(decoded.id);
     } else {
-      window.location.href = "/";
+      router.push("/");
     }
   }, []);
 
@@ -28,7 +30,6 @@ const index = () => {
     formData.append("description", description);
     formData.append("userId", userId);
     formData.append("username", user);
-    formData.append("readBy", "false");
     const res = await fetch("http://localhost:8001/api/posts", {
       method: "POST",
       headers: {
@@ -37,8 +38,7 @@ const index = () => {
       body: formData,
     });
     if (res.ok) {
-      alert("Post created successfully");
-      window.location.href = "/feed";
+      alert("Post created");
     } else {
       alert("An error occured, please try again");
     }
@@ -56,8 +56,8 @@ const index = () => {
           type="file"
           name="image"
           id="image"
-          onChange={(e) => setImage(e.target.files[0])}
-          className="flex justify-center items-center bg-cyan-700 rounded-btn p-3 max-w-[250px]"
+          onChange={(e: any) => setImage(e.target.files[0])}
+          className="flex justify-center items-center bg-cyan-700 rounded-btn p-3 max-w-[250px] cursor-pointer"
           multiple={false}
           accept="image/*"
         />
@@ -73,7 +73,7 @@ const index = () => {
       </div>
       <button
         type="submit"
-        className="bg-primary rounded-btn p-3 w-32 text-center text-white flex-1 min-w-[70px] flex items-center justify-center italic font-semibold hover:bg-gray-800 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:ring-opacity-50 focus:ring"
+        className="bg-primary rounded-btn p-3 w-32 text-center flex-1 min-w-[70px] flex items-center justify-center italic font-semibold hover:bg-gray-800 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:ring-opacity-50 focus:ring"
       >
         Post
       </button>

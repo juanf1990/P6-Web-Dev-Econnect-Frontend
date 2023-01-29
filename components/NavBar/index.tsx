@@ -2,38 +2,54 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { User } from "../../typings";
+import { useRouter } from "next/router";
 
 const index = () => {
   const [user, setUser] = useState<User | null>(null);
   const cookie = Cookies.get("token");
+  const router = useRouter();
 
   useEffect(() => {
     if (cookie) {
       const decoded: any = jwtDecode(cookie);
       Cookies.set("username", decoded.username);
+      Cookies.set("userId", decoded.id);
       setUser(decoded.username);
     }
-    console.log(user);
   }, []);
 
   const logout = () => {
     Cookies.remove("token");
     Cookies.remove("username");
-    window.location.href = "/";
+    Cookies.remove("userId");
+    router.push("/");
   };
 
-  const deleteAccount = () => {
-    Cookies.remove("token");
-    Cookies.remove("username");
-    window.location.href = "/";
-  };
+  async function deleteAccount() {
+    const userId = Cookies.get("userId");
+    const res = await fetch(`http://localhost:8001/api/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
+    if (res.ok) {
+      alert("Account deleted");
+      Cookies.remove("token");
+      Cookies.remove("username");
+      Cookies.remove("userId");
+      router.push("/");
+    } else {
+      alert("An error occured, please try again");
+    }
+  }
 
   const auth = () => {
     const cookie = Cookies.get("token");
     if (!cookie) {
-      window.location.href = "/";
+      router.push("/");
     } else {
-      window.location.href = "/feed";
+      router.push("/feed");
     }
   };
 

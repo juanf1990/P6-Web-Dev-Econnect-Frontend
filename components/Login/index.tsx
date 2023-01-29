@@ -3,12 +3,13 @@ import React from "react";
 import Image from "next/image";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 const url = "http://localhost:8001/api/users/login";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   let handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
@@ -30,7 +31,7 @@ const Login = () => {
         Cookies.set("token", resJson.token);
 
         // Redirect to feed page
-        window.location.href = "/feed";
+        router.push("/feed");
       } else {
         alert("Check your email and password");
       }
