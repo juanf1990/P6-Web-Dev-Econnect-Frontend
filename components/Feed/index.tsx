@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-  const [backgroundColor, setBackgroundColor] = useState("badge-primary");
-  const [readBy, setReadBy] = useState(["Mark as read"]);
+  const [backgroundColor, setBackgroundColor] = useState("bg-green-600");
+  const [readBy, setReadBy] = useState(false);
   const cookie = Cookies.get("userId");
   const token = Cookies.get("token");
   const router = useRouter();
@@ -17,6 +17,19 @@ const Feed = () => {
       const res = await fetch("http://localhost:8001/api/posts/");
       const data = await res.json();
       const posts = data;
+      for (let i = 0; i < posts.length; i++) {
+        const res = await fetch(
+          `http://localhost:8001/api/users_posts/${posts[i].id}/${cookie}`
+        );
+        // Check that the userId is in the same row as the post id is in the users_posts table
+        const data = await res.json();
+        const result = data;
+        if (result === true) {
+          posts[i].readBy = true;
+        } else if (result === false) {
+          posts[i].readBy = false;
+        }
+      }
       setPosts(posts);
     };
 
@@ -27,29 +40,36 @@ const Feed = () => {
     }
   }, []);
 
-  const handleMarkAsRead = async (id: string) => {
-    const readBy = JSON.stringify({ readBy: cookie });
-    const res = await fetch(`http://localhost:8001/api/posts/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      body: readBy,
-    });
-
-    if (res.status === 200) {
-      // Check if user is already in the readBy array and change the badge color
-      const post: any = posts.find((post: Post) => post.id === id);
-      if (post.readBy.includes(cookie)) {
-        setBackgroundColor("badge-secondary");
-        setReadBy(["Read"]);
-      } else {
-        setBackgroundColor("badge-primary");
-        setReadBy(["Mark as read"]);
-      }
+  const handleMarkAsRead = async (id: any, cookie: any) => {
+    if (cookie === undefined || cookie === null) {
+      router.push("/");
+      return;
     } else {
-      console.log("error on submitting");
+      // Check if the user has already liked the post
+      const res = await fetch(
+        `http://localhost:8001/api/users_posts/${id}/${cookie}`
+      );
+      const data = await res.json();
+      const result = data;
+      if (result === true) {
+        alert("Post already marked as read");
+      } else if (result === false) {
+        const response = await fetch(`http://localhost:8001/api/users_posts/`, {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: cookie, postId: id }),
+        });
+        setReadBy(true);
+        const data = await response.json();
+        if (response.ok) {
+          alert("Post marked as read");
+        } else {
+          console.error(data);
+        }
+      }
     }
   };
 
@@ -65,8 +85,8 @@ const Feed = () => {
           <p className="text-lg">Be the first to post</p>
         </div>
       ) : (
-        <div className="posts-container flex flex-col gap-4">
-          {posts.map((post: Post) => (
+        <div className="posts-container flex flex-col-reverse gap-4">
+          {posts.map((post: any) => (
             <div
               className="card flex lg:card-side glass shadow-xl"
               key={post.id}
@@ -88,10 +108,12 @@ const Feed = () => {
                 </p>
                 <div className="flex justify-end bg-cyan-600 rounded-b-lg px-2 py-2">
                   <span
-                    className={`badge ${backgroundColor} cursor-pointer text-[12px] font-bold`}
-                    onClick={() => handleMarkAsRead(post.id)}
+                    // TODO: Set the background color of the badge based on the boolean value of the post and the text of the badge based on the boolean value of the post
+                    className={`badge ${backgroundColor} cursor-pointer text-[12px] font-bold text-white`}
+                    onClick={() => handleMarkAsRead(post.id, cookie)}
                   >
-                    {readBy}
+                    {post.readBy === false && "Mark as read"}
+                    {post.readBy === true && "Read"}
                   </span>
                 </div>
               </div>

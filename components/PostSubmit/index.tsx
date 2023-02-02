@@ -30,7 +30,7 @@ const index = () => {
     formData.append("description", description);
     formData.append("userId", userId);
     formData.append("username", user);
-    const res = await fetch("http://localhost:8001/api/posts", {
+    const res = await fetch("http://localhost:8001/api/posts/", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${cookie}`,

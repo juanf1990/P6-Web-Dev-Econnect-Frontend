@@ -12,7 +12,6 @@ export type Post = {
     imgUrl: string;
     description: string;
     username: string;
-    readBy: boolean;
 };
 
 
