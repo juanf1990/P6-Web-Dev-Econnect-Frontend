@@ -18,22 +18,26 @@ const Feed = () => {
       const data = await res.json();
       const posts = data;
       for (let i = 0; i < posts.length; i++) {
-        const res = await fetch(
-          `http://localhost:8001/api/users_posts/${posts[i].id}/${cookie}`
-        );
-        // Check that the userId is in the same row as the post id is in the users_posts table
-        const data = await res.json();
-        const result = data;
-        if (result === true) {
-          posts[i].readBy = true;
-        } else if (result === false) {
-          posts[i].readBy = false;
+        if (!cookie) {
+          return router.reload();
+        } else {
+          const res = await fetch(
+            `http://localhost:8001/api/users_posts/${posts[i].id}/${cookie}`
+          );
+          // Check that the userId is in the same row as the post id is in the users_posts table
+          const data = await res.json();
+          const result = data;
+          if (result === true) {
+            posts[i].readBy = true;
+          } else if (result === false) {
+            posts[i].readBy = false;
+          }
         }
+        setPosts(posts);
       }
-      setPosts(posts);
     };
 
-    if (!cookie) {
+    if (!token) {
       router.push("/");
     } else {
       fetchPosts();
@@ -66,6 +70,7 @@ const Feed = () => {
         const data = await response.json();
         if (response.ok) {
           alert("Post marked as read");
+          router.reload();
         } else {
           console.error(data);
         }
