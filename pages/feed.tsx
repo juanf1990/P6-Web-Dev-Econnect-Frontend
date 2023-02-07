@@ -28,7 +28,7 @@ export default function Home() {
           name="viewport"
           content="width=device-width, initial-scale=1 viewport-fit=cover"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/icon.png" />
       </Head>
       <main className=" bg-light-primary">
         <NavBar />
