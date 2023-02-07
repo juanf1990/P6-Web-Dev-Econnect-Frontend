@@ -23,7 +23,7 @@ const index = () => {
     }
   }, []);
 
-  const handleSubmit = async (e: any) => {
+  async function handleSubmit(e: any) {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", image);
@@ -37,12 +37,15 @@ const index = () => {
       },
       body: formData,
     });
-    if (res.ok) {
-      alert("Post created");
+    const data = await res.status;
+    if (!data) {
+      console.log("error");
     } else {
-      alert("An error occured, please try again");
+      router.reload();
+      alert("Post created successfully");
     }
-  };
+  }
+
   return (
     <form
       name="form"
