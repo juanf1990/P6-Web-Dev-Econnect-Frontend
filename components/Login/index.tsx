@@ -5,7 +5,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Link from "next/link";
-const url = "https://testbackend-production.up.railway.app/api/users/login";
+const url = process.env.api_url + "api/users/login";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,9 +24,9 @@ const Login = () => {
           password: password,
         }),
       });
-      if (!res.ok) {
-        alert("An error occured, please try again");
-      }
+      // if (!res.ok) {
+      //   alert("An error occured, please try again");
+      // }
       let resJson = await res.json();
       if (res.ok) {
         Cookies.set("token", resJson.token);

@@ -11,7 +11,7 @@ const Feed = () => {
   const cookie = Cookies.get("userId");
   const token = Cookies.get("token");
   const router = useRouter();
-  const url = "https://testbackend-production.up.railway.app/";
+  const url = process.env.api_url;
 
   useEffect(() => {
     const fetchPosts = async () => {

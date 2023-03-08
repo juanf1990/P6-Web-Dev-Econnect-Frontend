@@ -10,7 +10,7 @@ const Index = () => {
   const [user, setUser] = useState<User | null>(null);
   const cookie = Cookies.get("token");
   const router = useRouter();
-  const url = "https://testbackend-production.up.railway.app/";
+  const url = process.env.api_url;
 
   useEffect(() => {
     if (cookie) {
