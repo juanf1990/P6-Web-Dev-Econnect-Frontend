@@ -3,8 +3,10 @@ import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { User } from "../../typings";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 
-const index = () => {
+const Index = () => {
   const [user, setUser] = useState<User | null>(null);
   const cookie = Cookies.get("token");
   const router = useRouter();
@@ -56,9 +58,9 @@ const index = () => {
   return (
     <div className="navbar flex justify-between bg-base-100 fixed z-10">
       <div>
-        <a className="btn btn-ghost normal-case text-l" onClick={auth}>
+        <h2 className="btn btn-ghost normal-case text-l" onClick={auth}>
           E-Connect!
-        </a>
+        </h2>
         <p>
           Hello <>{user}</>
         </p>
@@ -67,7 +69,7 @@ const index = () => {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="/icon-left-font.svg" />
+              <Image src="/icon-left-font.svg" alt="Icon" />
             </div>
           </label>
           <ul
@@ -75,14 +77,14 @@ const index = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a href="/" onClick={logout}>
+              <Link href="/" onClick={logout}>
                 Logout
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/" onClick={deleteAccount}>
+              <Link href="/" onClick={deleteAccount}>
                 Delete Account!
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -91,4 +93,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

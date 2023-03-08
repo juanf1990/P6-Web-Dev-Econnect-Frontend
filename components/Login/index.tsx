@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Link from "next/link";
 const url = "http://localhost:8001/api/users/login";
 
 const Login = () => {
@@ -100,10 +101,10 @@ const Login = () => {
             <div className="form-control mt-6">
               <label className="label">
                 <span className="label-text-alt">
-                  Don't have an account?{" "}
-                  <a href="/signup" className="link link-hover">
+                  Don`&apos;`t have an account?
+                  <Link href="/signup" className="link link-hover">
                     Sign up
-                  </a>
+                  </Link>
                 </span>
               </label>
             </div>

@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
 
-const index = () => {
+const Index = () => {
   const [user, setUser] = useState("");
   const [userId, setUserId] = useState("");
   const [description, setDescription] = useState("");
@@ -84,4 +84,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

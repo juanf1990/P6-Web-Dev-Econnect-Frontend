@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 const url = "http://localhost:8001/api/users/signup";
 
 const Signup = () => {
@@ -115,9 +116,9 @@ const Signup = () => {
               <label className="label">
                 <span className="label-text-alt">
                   Already with us?{" "}
-                  <a href="/" className="link link-hover">
+                  <Link href="/" className="link link-hover">
                     Login now!
-                  </a>
+                  </Link>
                 </span>
               </label>
             </div>
