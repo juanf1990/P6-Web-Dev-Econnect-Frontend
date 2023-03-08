@@ -11,10 +11,11 @@ const Feed = () => {
   const cookie = Cookies.get("userId");
   const token = Cookies.get("token");
   const router = useRouter();
+  const url = "https://testbackend-production.up.railway.app/";
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch("http://localhost:8001/api/posts/");
+      const res = await fetch(url + "api/posts/");
       const data = await res.json();
       const posts = data;
       for (let i = 0; i < posts.length; i++) {
@@ -22,7 +23,7 @@ const Feed = () => {
           return router.reload();
         } else {
           const res = await fetch(
-            `http://localhost:8001/api/users_posts/${posts[i].id}/${cookie}`
+            url + `api/users_posts/${posts[i].id}/${cookie}`
           );
           // Check that the userId is in the same row as the post id is in the users_posts table
           const data = await res.json();
@@ -50,15 +51,13 @@ const Feed = () => {
       return;
     } else {
       // Check if the user has already liked the post
-      const res = await fetch(
-        `http://localhost:8001/api/users_posts/${id}/${cookie}`
-      );
+      const res = await fetch(url + `api/users_posts/${id}/${cookie}`);
       const data = await res.json();
       const result = data;
       if (result === true) {
         alert("Post already marked as read");
       } else if (result === false) {
-        const response = await fetch(`http://localhost:8001/api/users_posts/`, {
+        const response = await fetch(url + `api/users_posts/`, {
           method: "POST",
           headers: {
             authorization: `Bearer ${token}`,

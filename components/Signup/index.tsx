@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-const url = "http://localhost:8001/api/users/signup";
+const url = "https://testbackend-production.up.railway.app/api/users/signup";
 
 const Signup = () => {
   const [username, setUserName] = useState("");
@@ -115,7 +115,7 @@ const Signup = () => {
             <div className="form-control mt-6">
               <label className="label">
                 <span className="label-text-alt">
-                  Already with us?{" "}
+                  Already with us?
                   <Link href="/" className="link link-hover">
                     Login now!
                   </Link>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Link from "next/link";
-const url = "http://localhost:8001/api/users/login";
+const url = "https://testbackend-production.up.railway.app/api/users/login";
 
 const Login = () => {
   const [email, setEmail] = useState("");

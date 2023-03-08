@@ -11,6 +11,7 @@ const Index = () => {
   const cookie = Cookies.get("token");
   const router = useRouter();
   const [posts, setPosts] = useState([]);
+  const url = "https://testbackend-production.up.railway.app/";
 
   useEffect(() => {
     if (cookie) {
@@ -30,7 +31,7 @@ const Index = () => {
     formData.append("description", description);
     formData.append("userId", userId);
     formData.append("username", user);
-    const res = await fetch("http://localhost:8001/api/posts/", {
+    const res = await fetch(url + "api/posts/", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${cookie}`,

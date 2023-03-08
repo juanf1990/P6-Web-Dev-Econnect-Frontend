@@ -10,6 +10,7 @@ const Index = () => {
   const [user, setUser] = useState<User | null>(null);
   const cookie = Cookies.get("token");
   const router = useRouter();
+  const url = "https://testbackend-production.up.railway.app/";
 
   useEffect(() => {
     if (cookie) {
@@ -29,7 +30,7 @@ const Index = () => {
 
   async function deleteAccount() {
     const userId = Cookies.get("userId");
-    const res = await fetch(`http://localhost:8001/api/users/${userId}`, {
+    const res = await fetch(url + `api/users/${userId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${cookie}`,
