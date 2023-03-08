@@ -101,7 +101,7 @@ const Login = () => {
             <div className="form-control mt-6">
               <label className="label">
                 <span className="label-text-alt">
-                  Don`&apos;`t have an account?
+                  Dont have an account?
                   <Link href="/signup" className="link link-hover">
                     Sign up
                   </Link>
