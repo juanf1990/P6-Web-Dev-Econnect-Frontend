@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-const url = process.env.api_url + "/api/users/signup";
+const url = "https://testbackend-production.up.railway.app/api/users/signup";
 
 const Signup = () => {
   const [username, setUserName] = useState("");
