@@ -23,7 +23,7 @@ const Feed = () => {
         if (!cookie) {
           return router.reload();
         } else {
-          const res = await fetch(url + `${posts[i].id}/${cookie}`);
+          const res = await fetch(url2 + `${posts[i].id}/${cookie}`);
           // Check that the userId is in the same row as the post id is in the users_posts table
           const data = await res.json();
           const result = data;
@@ -50,13 +50,13 @@ const Feed = () => {
       return;
     } else {
       // Check if the user has already liked the post
-      const res = await fetch(url + `${id}/${cookie}`);
+      const res = await fetch(url2 + `${id}/${cookie}`);
       const data = await res.json();
       const result = data;
       if (result === true) {
         alert("Post already marked as read");
       } else if (result === false) {
-        const response = await fetch(url, {
+        const response = await fetch(url2, {
           method: "POST",
           headers: {
             authorization: `Bearer ${token}`,
